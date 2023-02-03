@@ -22,14 +22,18 @@ namespace SucosVendas.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCode Post([FromBody] string values)
+        public HttpResponseMessage Post([FromBody] string values)
         {
             Sucos suco = JsonConvert.DeserializeObject<Sucos>(values);
             if (String.IsNullOrEmpty(suco.Marca) || String.IsNullOrEmpty(suco.Sabor) || String.IsNullOrEmpty(suco.QuantidadeMl))
-                return HttpStatusCode.BadRequest;
+            {
+                HttpContext.Response.StatusCode = 400;
+                return new HttpResponseMessage() { StatusCode = (HttpStatusCode)400, ReasonPhrase = "Algum argumento veio vazio. Favor verificar."};
+            }
             Quantidade++;
             sucos.Add(Quantidade, suco);
-            return HttpStatusCode.OK;
+            HttpContext.Response.StatusCode = 200;
+            return new HttpResponseMessage() { StatusCode = (HttpStatusCode)200,ReasonPhrase = "Cadastrado"};
         }
     }
 }
