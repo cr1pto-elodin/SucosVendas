@@ -30,8 +30,6 @@ namespace SucosVendas.Controllers
                 HttpContext.Response.StatusCode = 400;
                 return new HttpResponseMessage() { StatusCode = (HttpStatusCode)400, ReasonPhrase = "Algum argumento veio vazio. Favor verificar."};
             }
-            Quantidade++;
-            sucos.Add(Quantidade, suco);
             HttpContext.Response.StatusCode = 200;
             return new HttpResponseMessage() { StatusCode = (HttpStatusCode)200,ReasonPhrase = "Cadastrado"};
         }
